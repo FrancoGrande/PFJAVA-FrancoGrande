@@ -55,9 +55,9 @@ public class FrancoApplication implements CommandLineRunner {
         productoService.guardarProducto(celu1);
         productoService.guardarProducto(celu2);
 
-        
 
 
+        System.out.println(persona1.getNombre() + " compro un " + celu2.getNombre() + "al precio de $" + celu2.getPrecio());
     }
 
     
