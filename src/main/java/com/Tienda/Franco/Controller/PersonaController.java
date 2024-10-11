@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Service.PersonaService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +26,6 @@ public class PersonaController {
     @GetMapping("/all")
     public List<Persona> obtenerPersonaPorId() {
         return this.personaService.obtenerPersona();
-
     }
     
 
@@ -38,7 +40,18 @@ public class PersonaController {
             System.out.println("error:" + e.getMessage());
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
 
-    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> eliminarPersona(@PathVariable int id) {
+        
+        try{
+            this.personaService.eliminarPersona(id);
+            return ResponseEntity.ok("persona eliminada correctamente al estilo hitman");
+            
+        } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
+            return ResponseEntity.status(400).body("persona no encontrada");
+        }
     }
 }

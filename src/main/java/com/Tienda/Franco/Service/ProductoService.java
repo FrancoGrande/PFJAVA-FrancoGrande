@@ -1,11 +1,7 @@
 package com.Tienda.Franco.Service;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Repository.ProductoRepository;
 

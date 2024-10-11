@@ -8,8 +8,7 @@ import com.Tienda.Franco.Service.ProductoService;
 import com.Tienda.Franco.Service.PersonaService;
 import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
-import java.util.Arrays;
-import com.Tienda.Franco.Controller.PersonaController;
+
 
 
 @SpringBootApplication

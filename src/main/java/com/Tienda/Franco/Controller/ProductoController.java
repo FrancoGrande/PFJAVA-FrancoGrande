@@ -11,7 +11,9 @@ import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Service.ProductoService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -43,8 +45,19 @@ public class ProductoController {
             System.out.println("error:" + e.getMessage());
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
 
-    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> eliminarProducto(@PathVariable int id) {
+        
+        try{
+            this.productoService.eliminarProducto(id);
+            return ResponseEntity.ok("Producto eliminada correctamente");
+            
+        } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
+            return ResponseEntity.status(400).body("Producto no encontrada");
+        }
     }
 
 }
