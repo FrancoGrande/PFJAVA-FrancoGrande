@@ -1,8 +1,11 @@
 package com.Tienda.Franco.Service;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Repository.ProductoRepository;
 
@@ -12,11 +15,15 @@ public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    public Producto obteneProducto(int id) {
+    public Producto obteneProductoPorId(int id) {
         return productoRepository.findById(id).orElse(null);
     }
 
-    public Producto guardarProducto(Producto producto) {
+    public List<Producto> obtenerProducto() {
+    return productoRepository.findAll();
+    }
+
+    public Producto agregarUnProducto(Producto producto) {
         return productoRepository.save(producto);
     }
 

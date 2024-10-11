@@ -1,15 +1,15 @@
 package com.Tienda.Franco;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import java.util.Arrays;
-
+import com.Tienda.Franco.Service.ProductoService;
+import com.Tienda.Franco.Service.PersonaService;
 import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
-import com.Tienda.Franco.Service.PersonaService;
-import com.Tienda.Franco.Service.ProductoService;
+import java.util.Arrays;
+import com.Tienda.Franco.Controller.PersonaController;
 
 
 @SpringBootApplication
@@ -36,8 +36,8 @@ public class FrancoApplication implements CommandLineRunner {
         persona2.setDni(36760701);
 
         //guardamos personas en la base de datos
-        personaService.guardarPersona(persona1);
-        personaService.guardarPersona(persona2);
+        personaService.agregarUnaPersona(persona1);
+        personaService.agregarUnaPersona(persona2);
 
 
         //creamos productos
@@ -52,12 +52,13 @@ public class FrancoApplication implements CommandLineRunner {
         celu2.setPrecio(5000);
 
         //guardamos celulares en la base de datos
-        productoService.guardarProducto(celu1);
-        productoService.guardarProducto(celu2);
+        productoService.agregarUnProducto(celu1);
+        productoService.agregarUnProducto(celu2);
 
+        //buscar personas
+        personaService.obtenerPersona();
 
-
-        System.out.println(persona1.getNombre() + " compro un " + celu2.getNombre() + "al precio de $" + celu2.getPrecio());
+        // System.out.println(persona1.getNombre() + " compro un " + celu2.getNombre() + "al precio de $" + celu2.getPrecio());
     }
 
     

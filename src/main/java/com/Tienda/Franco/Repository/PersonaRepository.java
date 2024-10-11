@@ -9,4 +9,6 @@ import com.Tienda.Franco.Model.Producto;
 @Repository
 public interface PersonaRepository extends JpaRepository <Persona, Integer> {
 
+    
+
 }
