@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Service.ProductoService;
 
@@ -30,7 +29,7 @@ public class ProductoController {
 
     @GetMapping("/all")
     public List<Producto> obtenerProductoPorId() {
-    return this.productoService.obtenerProducto();
+    return this.productoService.obtenerProductoPorId(int.class);
 
     }
 

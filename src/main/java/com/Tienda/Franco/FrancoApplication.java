@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import com.Tienda.Franco.Service.ProductoService;
-import com.Tienda.Franco.Service.PersonaService;
+import com.Tienda.Franco.Service.PersonaServiceRest;
 import com.Tienda.Franco.Model.Persona;
 import com.Tienda.Franco.Model.Producto;
 
@@ -14,7 +14,7 @@ import com.Tienda.Franco.Model.Producto;
 @SpringBootApplication
 public class FrancoApplication implements CommandLineRunner {
     @Autowired
-    private PersonaService personaService;
+    private PersonaServiceRest personaService;
     @Autowired
     private ProductoService productoService;
 

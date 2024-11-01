@@ -20,7 +20,7 @@ public class Producto {
     
         @Id
         @GeneratedValue( strategy = GenerationType.IDENTITY)
-        private int id;
+        private long id;
     
         @Column(name ="NOMBRE")
         private String nombre;
@@ -29,7 +29,7 @@ public class Producto {
         private String color;
 
         @Column(name ="PRECIO")
-        private int precio;
+        private long precio;
 
         @ManyToOne(fetch = FetchType.LAZY)
         private Persona persona;

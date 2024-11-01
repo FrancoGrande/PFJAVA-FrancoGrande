@@ -23,7 +23,7 @@ public class Persona {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name ="NOMBRE")
     private String nombre;
@@ -35,3 +35,5 @@ public class Persona {
     private List<Producto> producto;
 
 }
+
+//listo
