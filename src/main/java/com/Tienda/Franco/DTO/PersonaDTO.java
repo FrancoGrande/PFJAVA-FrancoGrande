@@ -1,7 +1,5 @@
 package com.Tienda.Franco.DTO;
 
-import java.util.Set;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +20,8 @@ public class PersonaDTO {
     private long dni;
 
 
-
+    public PersonaDTO() {
+    }
 
 
     public PersonaDTO(Long id, String name, long dni) { 
@@ -36,8 +35,13 @@ public class PersonaDTO {
 
 
     public static Object builder() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
+
+
+    public String getProductoIds() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProductoIds'");
     }
 
 }

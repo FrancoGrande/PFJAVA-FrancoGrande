@@ -1,5 +1,6 @@
 package com.Tienda.Franco.DTO;
 
+import java.util.Set;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,6 @@ import lombok.Data;
 
 @Data
 @Builder
-
 public class ProductoDTO {
 
     @Schema(description = "Identificador único persona", example = "1")
@@ -24,12 +24,16 @@ public class ProductoDTO {
     @Schema(description = "precio del equipo", example = "15000") 
     private long precio;
 
+    public productoDTO() {
+    }   
+
     public ProductoDTO(Long id, String color, String name, long precio) {
         this.id = id;
         this.color = color;
         this.name = name;
         this.precio = precio;
     }
+
 
 }
 

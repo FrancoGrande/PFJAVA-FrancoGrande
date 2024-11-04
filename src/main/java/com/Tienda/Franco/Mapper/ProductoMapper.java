@@ -1,18 +1,16 @@
 package com.Tienda.Franco.Mapper;
 
 import org.springframework.stereotype.Component;
-
 import com.Tienda.Franco.DTO.ProductoDTO;
 import com.Tienda.Franco.Model.Producto;
 
 @Component
 public class ProductoMapper {
 
-
-
-    public static ProductoDTO toDTO(Producto producto) {
+    // Convertir de Producto a ProductoDTO
+    public ProductoDTO toDTO(Producto producto) {
         if (producto == null) {
-            throw new IllegalArgumentException("La persona no puede ser nula");
+            throw new IllegalArgumentException("El producto no puede ser nulo");
         }
         return ProductoDTO.builder() 
                 .id(producto.getId())    
@@ -22,9 +20,10 @@ public class ProductoMapper {
                 .build();
     }
 
-    public static Producto toEntity(ProductoDTO productoDTO) {  
+    // Convertir de ProductoDTO a Producto
+    public Producto toEntity(ProductoDTO productoDTO) {  
         if (productoDTO == null) {
-            throw new IllegalArgumentException("La personaDTO no puede ser nula");
+            throw new IllegalArgumentException("El productoDTO no puede ser nulo");
         }
 
         Producto producto = new Producto();

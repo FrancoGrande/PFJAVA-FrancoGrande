@@ -1,19 +1,18 @@
 package com.Tienda.Franco.Mapper;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.Tienda.Franco.DTO.PersonaDTO;
 import com.Tienda.Franco.Model.Persona;
+
+import lombok.Builder;
 
 
 @Component
 public class PersonaMapper {
 
-
     // Convertir de Persona a PersonaDTO
-    public static PersonaDTO toDTOPersona(Persona persona) {
-
+    public PersonaDTO toDTOPersona(Persona persona) {
         if (persona == null) {
             throw new IllegalArgumentException("La persona no puede ser nula");
         }
@@ -24,10 +23,8 @@ public class PersonaMapper {
                 .build();
     }
 
-    
     // Convertir de PersonaDTO a Persona
-    public static Persona toEntity(PersonaDTO personaDTO) {
-
+    public Persona toEntity(PersonaDTO personaDTO) {
         if (personaDTO == null) {
             throw new IllegalArgumentException("La personaDTO no puede ser nula");
         }
@@ -38,5 +35,3 @@ public class PersonaMapper {
         return persona;
     }
 }
-
-

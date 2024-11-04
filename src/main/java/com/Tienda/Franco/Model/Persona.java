@@ -22,7 +22,7 @@ public class Persona {
 
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
 
     @Column(name ="NOMBRE")

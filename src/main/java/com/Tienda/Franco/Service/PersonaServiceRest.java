@@ -1,6 +1,8 @@
 package com.Tienda.Franco.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.Tienda.Franco.DTO.PersonaDTO;
 import com.Tienda.Franco.Mapper.PersonaMapper;
@@ -10,26 +12,23 @@ import com.Tienda.Franco.Repository.PersonaRepository;
 import com.Tienda.Franco.Repository.ProductoRepository;
 
 import jakarta.transaction.Transactional;
-import scala.collection.mutable.HashSet;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
-
 
 @Service
 public class PersonaServiceRest {
 
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/users";
 
-    @Autowired
     private final PersonaRepository personaRepository;
+    private final PersonaMapper personaMapper;
 
     @Autowired
-    private final PersonaMapper personaMapper;
+    private ProductoRepository productoRepository;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -39,46 +38,43 @@ public class PersonaServiceRest {
         this.personaMapper = personaMapper;
     }
 
-
     public List<PersonaDTO> obtenerPersonaAll() {
         List<PersonaDTO> personaDB = personaRepository.findAll().stream()
-                .map(personaMapper::toDTOPersona).toList();
+                .map(personaMapper::toDTOPersona)
                 .collect(Collectors.toList());
 
-                Persona[] personaAPI =restTemplate.getForObject(BASE_URL,Persona[].class);
+        Persona[] personaAPI = restTemplate.getForObject(BASE_URL, Persona[].class);
 
-                if (personaAPI != null) {
-                    for (Persona persona : personaAPI) {
-                        personaDB.add(PersonaMapper.toDTOPersona(persona));
-                    }
-                }
+        if (personaAPI != null) {
+            for (Persona persona : personaAPI) {
+                personaDB.add(personaMapper.toDTOPersona(persona));
+            }
+        }
 
-                return personaDB;
-        
+        return personaDB;
     }
 
-
     public PersonaDTO obtenerPersonaPorId(Long id) {
-        Optional<Persona> optionalPersona = personaRepository.findById(id); 
+        Optional<Persona> optionalPersona = personaRepository.findById(id);
 
-        if(!optionalPersona.isPresent()) {
+        if (optionalPersona.isPresent()) {
             return personaMapper.toDTOPersona(optionalPersona.get());
         } else {
             PersonaDTO personaDTO = restTemplate.getForObject(BASE_URL + "/{id}", PersonaDTO.class, id);
-            if(personaDTO != null) {
+            if (personaDTO != null) {
                 return personaDTO;
             } else {
                 throw new IllegalArgumentException("Persona no encontrada");
             }
         }
-            
     }
+
     @Transactional
     public PersonaDTO guardarPersonaFromAPI(long id) {
-        PersonaDTO personaDTO = restTemplate.getForObject(BASE_URL +"/{id}", PersonaDTO.class, id);
+        PersonaDTO personaDTO = restTemplate.getForObject(BASE_URL + "/{id}", PersonaDTO.class, id);
 
-        if(personaDTO != null) {
-            Persona persona = PersonaMapper.toEntity(personaDTO);
+        if (personaDTO != null) {
+            Persona persona = personaMapper.toEntity(personaDTO);
             Persona personaGuardada = personaRepository.save(persona);
             return personaMapper.toDTOPersona(personaGuardada);
         } else {
@@ -87,16 +83,17 @@ public class PersonaServiceRest {
     }
 
     public PersonaDTO guardarPersonaDTO(PersonaDTO personaDTO) {
-        Persona persona = PersonaMapper.toEntity(personaDTO);
+        Persona persona = personaMapper.toEntity(personaDTO);
 
-        if(personaDTO.getProductoIds() != null && !personaDTO.getProductoIds().isEmpty()) {
-            List<Producto> productos = new HashSet<>();
-
+        if (personaDTO.getProductoIds() != null && !personaDTO.getProductoIds().isEmpty()) {
+            Set<Producto> productos = new HashSet<>();
 
             for (long productoId : personaDTO.getProductoIds()) {
-                Optional<Producto> optionalProducto = ProductoRepository.findById(productoId);
+                Optional<Producto> optionalProducto = productoRepository.findById(productoId);
                 optionalProducto.ifPresent(productos::add);
             }
+
+            persona.setProductos(productos);  // Asegúrate de que Persona tenga este atributo y método
         }
 
         Persona personaGuardada = personaRepository.save(persona);
@@ -104,7 +101,7 @@ public class PersonaServiceRest {
     }
 
     public void borrarPersona(Long id) {
-        if(personaRepository.existsById(id)) {
+        if (personaRepository.existsById(id)) {
             personaRepository.deleteById(id);
         } else {
             throw new IllegalArgumentException("Persona no encontrada");
@@ -112,18 +109,12 @@ public class PersonaServiceRest {
     }
 
     public PersonaDTO modificarPersona(Long id, PersonaDTO personaDTO) {
-        return personaRepository.findById(id)
+        return personaRepository.findByDni(id)
                 .map(persona -> {
                     persona.setName(personaDTO.getName());
                     persona.setDni(personaDTO.getDni());
                     return personaMapper.toDTOPersona(personaRepository.save(persona));
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Persona no encontrada"));
-
-        }
-
-    public personaDTO guardarPersonaFromAPI(PersonaDTO personaDTO) {
-        throw new UnsupportedOperationException("Unimplemented method 'guardarPersonaFromAPI'");
     }
-
 }
