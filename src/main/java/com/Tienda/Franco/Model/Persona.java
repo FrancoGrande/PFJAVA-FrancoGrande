@@ -1,5 +1,7 @@
 package com.Tienda.Franco.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,9 +12,11 @@ public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonProperty("name")
     private String nombre;
-    private String email; // Agregado
-    private String phone; // Agregado
+    private String email;
+    private String phone; 
 
     // Constructor vacío
     public Persona() {

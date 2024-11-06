@@ -16,6 +16,8 @@ public class PersonaMapper {
         return PersonaDTO.builder()
                 .id(persona.getId())
                 .name(persona.getNombre())
+                .email(persona.getEmail())
+                .phone(persona.getPhone())
                 .build();
     }
 
@@ -27,6 +29,8 @@ public class PersonaMapper {
         Persona persona = new Persona();
         persona.setId(personaDTO.getId());
         persona.setNombre(personaDTO.getName());
+        persona.setEmail(personaDTO.getEmail());
+        persona.setPhone(personaDTO.getPhone());
         return persona;
     }
 }
