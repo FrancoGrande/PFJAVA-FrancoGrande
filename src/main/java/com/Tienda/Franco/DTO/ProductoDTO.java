@@ -19,7 +19,7 @@ public class ProductoDTO {
     @Schema(description = "Stock del producto", example = "15")
     private int stock;
 
-    @Schema(description = "Categoría del producto", example = "celular")
+    @Schema(description = "Categoría del producto", example = "Samsung")
     private String categoria;
 
 

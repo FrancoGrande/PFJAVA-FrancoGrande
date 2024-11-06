@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class PersonaDTO {
-    @Schema(description = "Identificador único del Persona", example = "1")
+    @Schema(description = "Identificador de Persona", example = "1")
     private Long id;
     
     @Schema(description = "Nombre del Persona", example = "Asdasd Asdasd")
