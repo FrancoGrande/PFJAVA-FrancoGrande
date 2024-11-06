@@ -17,7 +17,7 @@ public class Persona {
     }
 
     // Constructor con parámetros
-    public Persona(Long id, String nombre, String habilidad) {
+    public Persona(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }

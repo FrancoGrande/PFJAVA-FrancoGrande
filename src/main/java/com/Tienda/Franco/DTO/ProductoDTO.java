@@ -13,7 +13,7 @@ public class ProductoDTO {
     @Schema(description = "Nombre del producto", example = "A15")
     private String nombre;
 
-    @Schema(description = "Precio del producto", example = "350.0")
+    @Schema(description = "Precio del producto", example = "350")
     private Double precio;
 
     @Schema(description = "Stock del producto", example = "15")
