@@ -3,19 +3,15 @@ package com.Tienda.Franco.Service;
 import java.util.List;
 import com.Tienda.Franco.DTO.PersonaDTO;
 
+
 public interface PersonaService {
+    PersonaDTO getPersonaById(Long id);
 
-    PersonaDTO getPersonaById();
+    List<PersonaDTO> getAllPersona();
 
-    List<PersonaDTO> obtenerPersonaAll();
+    PersonaDTO savePersonaDTO(PersonaDTO personaDTO);
 
-    PersonaDTO guardarPersona(PersonaDTO personaDTO);
+    PersonaDTO savePersonaFromApi(PersonaDTO personaDTO);
 
-    PersonaDTO guardarPersonaFromAPI();
-
-    PersonaDTO modificarPersona(PersonaDTO personaDTO);
-
-    void borrarPersona(Long id);
-
+    void deletePersona(Long id);
 }
-//listo

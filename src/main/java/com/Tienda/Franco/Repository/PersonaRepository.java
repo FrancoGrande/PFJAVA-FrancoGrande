@@ -1,16 +1,12 @@
 package com.Tienda.Franco.Repository;
-import java.util.List;
 
+import com.Tienda.Franco.Model.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.Tienda.Franco.Model.Persona;  
+import java.util.List;
 
 @Repository
-public interface PersonaRepository extends JpaRepository <Persona, Integer> {
+public interface PersonaRepository extends JpaRepository<Persona, Long> {
+    List<Persona> findByNombre(Persona persona);
 
-    boolean existsByDni (long dni);
-
-    List<Persona> findByDni (long dni);
-
-    List<Persona> findByNombre (Persona persona);
 }

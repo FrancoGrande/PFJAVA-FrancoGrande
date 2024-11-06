@@ -1,37 +1,44 @@
 package com.Tienda.Franco.Model;
 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
-    
-    
-@Data   
+
+
+
 @Entity
-@NoArgsConstructor
-@Table(name= "PRODUCTO")
+@Data
+@Builder
 public class Producto {
-    
-        @Id
-        @GeneratedValue( strategy = GenerationType.IDENTITY)
-        private long id;
-    
-        @Column(name ="NOMBRE")
-        private String nombre;
-    
-        @Column(name ="COLOR")
-        private String color;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    private String tipo;
 
-        @Column(name ="PRECIO")
-        private long precio;
+    private int stock; // Agregar atributo stock
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        private Persona persona;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona persona;
+ 
 
+    public Producto() {
     }
+
+    public Producto(Long id, String nombre, String tipo, int stock, Persona persona) {	
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.stock = stock; // Manejo de stock
+    }
+
+    public int getStock() {
+        return stock; // Método getter para stock
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock; // Método setter para stock
+    }
+
+
+}

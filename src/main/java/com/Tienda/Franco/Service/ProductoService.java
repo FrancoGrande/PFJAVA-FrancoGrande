@@ -1,5 +1,5 @@
 package com.Tienda.Franco.Service;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,71 +7,72 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Tienda.Franco.Mapper.ProductoMapper; 
 import com.Tienda.Franco.DTO.ProductoDTO;
 import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Repository.ProductoRepository;
+import com.Tienda.Franco.Mapper.ProductoMapper;
+
+
 
 @Service
 public class ProductoService {
-    
     @Autowired
-    private ProductoRepository productoRepository;
+    private final ProductoRepository productoRepository;
+    @Autowired
+    private final ProductoMapper productoMapper;
 
-    @Autowired
-    private ProductoMapper productoMapper;
 
     public ProductoService(ProductoRepository productoRepository, ProductoMapper productoMapper) {
         this.productoRepository = productoRepository;
         this.productoMapper = productoMapper;
     }
 
-    public List<ProductoDTO> obtenerTodosLosProducto() {
+    public List<ProductoDTO> getAllProductos() {
         if (productoRepository.findAll().isEmpty()) {
-            throw new RuntimeException("No hay productos");
+            throw new RuntimeException("No se encontraron productos");
         }
-        return productoRepository.findAll().stream()
+
+        return productoRepository.findAll()
+                .stream()
                 .map(productoMapper::toDTOProducto)
                 .collect(Collectors.toList());
     }
 
-    public List<Producto> obtenerProductoPorId(Class<Integer> id) {
+    public Optional<ProductoDTO> getProductoById(Long id) {
         if (productoRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("No hay productos");
+            throw new RuntimeException("No se encontraron productos");
         }
-        return productoMapper.findById(class1).map(productoMapper::toDTOProducto);
+        return productoRepository.findById(id).map(productoMapper::toDTOProducto);
     }
 
-    public ProductoDTO agregarUnProducto(Producto producto2) {
-        Producto producto = productoMapper.toEntity(producto2);
-        
-        if(producto2.getProductoIds() != null && !producto2.getProductoIds().isEmpty()) {
-            List<Producto> productos = new HashSet<>();
+    public ProductoDTO saveProducto(ProductoDTO productoDTO) {
+        Producto producto = productoMapper.toEntity(productoDTO);
 
-            for (long productoId : producto2.getProductoIds()) {
-                Optional<Producto> optionalProducto = ProductoRepository.findById(productoId);
-                optionalProducto.ifPresent(productos::add);
-            }
-        }
 
-        Producto productoGuardado = productoRepository.save(producto);
-        return productoMapper.toDTOProducto(productoGuardado);
+        Producto savedProducto = productoRepository.save(producto);
+        return productoMapper.toDTOProducto(savedProducto);
     }
 
-    public void eliminarProducto(int id) {
-        if(productoRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("No hay productos");
+    public void deleteProducto(Long id) {
+        if (productoRepository.existsById(id)) {
+            productoRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("El producto no existe");
         }
-        productoRepository.deleteById(id);
     }
 
+    public ProductoDTO updateStockProducto(Long productoId, int nuevoStock) {
+        return productoRepository.findById(productoId)
+            .map(producto -> {
+                int stockActual = producto.getStock();
+                int stockFinal = stockActual + nuevoStock;
+                if (stockFinal < 0) {
+                    throw new IllegalArgumentException("El stock no puede ser negativo.");
+                }
 
-    public void actualizarProducto(int id, ProductoDTO productoDTO) {
-        if(productoRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("No hay productos");
-        }
-        productoRepository.save(productoMapper.toEntity(productoDTO));
+                producto.setStock(stockFinal);
+                return productoMapper.toDTOProducto(productoRepository.save(producto));
+            })
+            .orElseThrow(() -> new RuntimeException("Producto no encontrada con id: " + productoId));
     }
 }
-
-//listo?

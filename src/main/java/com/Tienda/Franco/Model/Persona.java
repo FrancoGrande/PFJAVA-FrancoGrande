@@ -1,39 +1,45 @@
 package com.Tienda.Franco.Model;
 
-import java.util.List;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
+import java.util.Collection;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-
-@Data
 @Entity
-@NoArgsConstructor
-@Table(name= "PERSONA")
 public class Persona {
-
-
     @Id
-    @GeneratedValue( strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name ="NOMBRE")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
 
-    @Column(name = "DNI")
-    private long dni;
+    // Constructor vacío
+    public Persona() {
+    }
 
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Producto> producto;
+    // Constructor con parámetros
+    public Persona(Long id, String nombre, String habilidad) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
 }
-
-//listo

@@ -5,36 +5,34 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
-
-
-
 @Data
 @Builder
 public class ProductoDTO {
-
-    @Schema(description = "Identificador único persona", example = "1")
+    @Schema(description = "Id del producto", example = "1")
     private Long id;
 
-    @Schema(description = "color del equiop", example = "rojo")
-    private String color;
-    
-    @Schema(description = "Nombre de la persona", example = " A15")
-    private String name;
+    @Schema(description = "Nombre del producto", example = "A15")
+    private String nombre;
 
-    @Schema(description = "precio del equipo", example = "15000") 
-    private long precio;
+    @Schema(description = "Precio del producto", example = "350.0")
+    private Double precio;
 
-    public productoDTO() {
-    }   
+    @Schema(description = "Stock del producto", example = "15")
+    private int stock;
 
-    public ProductoDTO(Long id, String color, String name, long precio) {
-        this.id = id;
-        this.color = color;
-        this.name = name;
-        this.precio = precio;
+    @Schema(description = "Categoría del producto", example = "celular")
+    private String categoria;
+
+
+    public ProductoDTO() {
     }
 
+    public ProductoDTO(Long id, String nombre, Double precio, int stock, String categoria ) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+        this.categoria = categoria;
+    }
 
 }
-
-// listo

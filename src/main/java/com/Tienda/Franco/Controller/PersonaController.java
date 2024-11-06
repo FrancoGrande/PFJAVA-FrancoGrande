@@ -1,83 +1,81 @@
 package com.Tienda.Franco.Controller;
-import com.Tienda.Franco.DTO.PersonaDTO;
-import com.Tienda.Franco.Service.PersonaServiceRest;
-import com.Tienda.Franco.DTO.ApiresponseMsg;
+
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.Tienda.Franco.DTO.PersonaDTO;
+import com.Tienda.Franco.Service.PersonaServiceRest;
+import com.Tienda.Franco.DTO.ApiResponseMsg;
+
+
+
 import java.util.List;
 
-
-
-
 @RestController
-@RequestMapping("api/Persona")
+@RequestMapping("/api/personas")
 public class PersonaController {
-    
+
     private final PersonaServiceRest personaService;
 
     public PersonaController(PersonaServiceRest personaService) {
         this.personaService = personaService;
     }
 
+    // Crear un nuevo persona a partir de un DTO
     @PostMapping("/create")
-    public ResponseEntity<ApiresponseMsg> agregarPersona(@RequestBody PersonaDTO personaDTO) {
+    public ResponseEntity<?> addPersona(@RequestBody PersonaDTO personaDTO) {
         try {
-            PersonaDTO personaCreada = personaService.guardarPersonaDTO(personaDTO);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiresponseMsg("Persona creada exitosamente", HttpStatus.CREATED, personaCreada));
+            PersonaDTO createdPersona = personaService.savePersonaFromApi(personaDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseMsg("Persona creado", createdPersona));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiresponseMsg("Error al crear la persona: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+            return ResponseEntity.badRequest().body(new ApiResponseMsg("Error al crear persona", e.getMessage()));
         }
     }
 
+    // Obtener todos los personas
     @GetMapping("/all")
-    public ResponseEntity<ApiresponseMsg> obtenerPersonaAll() {
+    public ResponseEntity<?> getAllPersonas() {
         try {
-            List<PersonaDTO> personas = personaService.obtenerPersonaAll();
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiresponseMsg("Lista de personas obtenida exitosamente", HttpStatus.OK, personas));
+            List<PersonaDTO> personas = personaService.getAllPersonas();
+            return ResponseEntity.ok(new ApiResponseMsg("Lista de personas", personas));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiresponseMsg("Error al obtener personas: " + e.getMessage(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.badRequest().body(new ApiResponseMsg("No hay personas", e.getMessage()));
         }
     }
 
+    // Obtener un persona por ID
     @GetMapping("/{id}")
-    public ResponseEntity<ApiresponseMsg> obtenerPersonaPorId(@PathVariable int id) {
+    public ResponseEntity<?> getPersonaById(@PathVariable Long id) {
         try {
-            PersonaDTO persona = personaService.obtenerPersonaPorId(id);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiresponseMsg("Persona obtenida exitosamente", HttpStatus.OK, persona));
+            PersonaDTO persona = personaService.getPersonaById(id);
+            return ResponseEntity.ok(new ApiResponseMsg("Persona encontrado", persona));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiresponseMsg("Error: " + e.getMessage(), HttpStatus.NOT_FOUND));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponseMsg("Error: Persona no encontrado", e.getMessage()));
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiresponseMsg> borrarPersona(@PathVariable int id) {
+    // Eliminar persona por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePersona(@PathVariable Long id) {
         try {
-            personaService.borrarPersona(id);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiresponseMsg("Persona eliminada correctamente", HttpStatus.OK));
+            personaService.deletePersona(id);
+            return ResponseEntity.ok(new ApiResponseMsg("Persona eliminado", id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiresponseMsg("Error al eliminar persona: " + e.getMessage(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.badRequest().body(new ApiResponseMsg("Error: No se pudo eliminar el persona", e.getMessage()));
         }
     }
 
+    // Actualizar un persona
     @PutMapping("/{id}")
-    public ResponseEntity<ApiresponseMsg> actualizarPersona(@PathVariable int id, @RequestBody PersonaDTO personaDTO) {
+    public ResponseEntity<?> updatePersona(@PathVariable Long id, @RequestBody PersonaDTO personaDTO) {
         try {
-            PersonaDTO personaActualizada = personaService.modificarPersona(id, personaDTO);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiresponseMsg("Persona actualizada exitosamente", HttpStatus.OK, personaActualizada));
+            PersonaDTO updatedPersona = personaService.updatePersonaDTO(id, personaDTO);
+            return ResponseEntity.ok(new ApiResponseMsg("Persona actualizado", updatedPersona));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiresponseMsg("Error al actualizar persona: " + e.getMessage(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.badRequest().body(new ApiResponseMsg("Error al actualizar persona", e.getMessage()));
         }
     }
 }

@@ -1,36 +1,36 @@
 package com.Tienda.Franco.Mapper;
 
 import org.springframework.stereotype.Component;
+
 import com.Tienda.Franco.DTO.ProductoDTO;
 import com.Tienda.Franco.Model.Producto;
 
 @Component
 public class ProductoMapper {
 
-    // Convertir de Producto a ProductoDTO
-    public ProductoDTO toDTO(Producto producto) {
+    public ProductoDTO toDTOProducto(Producto producto) {
         if (producto == null) {
-            throw new IllegalArgumentException("El producto no puede ser nulo");
+            throw new IllegalArgumentException("La entidad no puede ser nula");
         }
-        return ProductoDTO.builder() 
-                .id(producto.getId())    
-                .name(producto.getNombre())
-                .color(producto.getColor())
-                .precio(producto.getPrecio())
+
+
+
+        return ProductoDTO.builder()
+                .id(producto.getId())
+                .nombre(producto.getNombre())
+                .stock(producto.getStock())
                 .build();
     }
 
-    // Convertir de ProductoDTO a Producto
-    public Producto toEntity(ProductoDTO productoDTO) {  
+    public Producto toEntity(ProductoDTO productoDTO) {
         if (productoDTO == null) {
             throw new IllegalArgumentException("El productoDTO no puede ser nulo");
         }
 
         Producto producto = new Producto();
-        producto.setNombre(productoDTO.getName());
-        producto.setColor(productoDTO.getColor());
-        producto.setPrecio(productoDTO.getPrecio());
-        return producto;   
+        producto.setId(productoDTO.getId());
+        producto.setNombre(productoDTO.getNombre());
+        producto.setStock(productoDTO.getStock());
+        return producto;
     }
 }
-// listo
