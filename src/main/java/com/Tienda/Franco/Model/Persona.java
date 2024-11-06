@@ -11,15 +11,19 @@ public class Persona {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    private String email; // Agregado
+    private String phone; // Agregado
 
     // Constructor vacío
     public Persona() {
     }
 
     // Constructor con parámetros
-    public Persona(Long id, String nombre) {
+    public Persona(Long id, String nombre, String email, String phone) {
         this.id = id;
         this.nombre = nombre;
+        this.email = email;
+        this.phone = phone;
     }
 
     // Getters y Setters
@@ -39,4 +43,19 @@ public class Persona {
         this.nombre = nombre;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

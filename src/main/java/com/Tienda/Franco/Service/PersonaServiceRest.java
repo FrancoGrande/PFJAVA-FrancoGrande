@@ -31,7 +31,7 @@ public class PersonaServiceRest {
         this.personaRepository = personaRepository;
         this.personaMapper = personaMapper;
     }
-
+// Obtener todos los personas
     public List<PersonaDTO> getAllPersonas() {
         List<PersonaDTO> personasDB = personaRepository.findAll().stream()
                 .map(personaMapper::toDTOPersona)
@@ -47,7 +47,7 @@ public class PersonaServiceRest {
 
         return personasDB;
     }
-
+// Obtener un persona por ID
     public PersonaDTO getPersonaById(Long id) {
         Optional<Persona> optionalPersona = personaRepository.findById(id);
 
@@ -63,7 +63,7 @@ public class PersonaServiceRest {
             }
         }
     }
-
+// Actualizar un persona en la base de datos y en la API
     @Transactional
     public PersonaDTO savePersonaFromApi(Long id) {
         PersonaDTO personaDTO = restTemplate.getForObject(BASE_URL + "/{id}", PersonaDTO.class, id);
@@ -76,19 +76,17 @@ public class PersonaServiceRest {
             throw new RuntimeException("Persona no encontrado en la API con ID: " + id);
         }
     }
-
+// Guardar un persona en la base de datos
     public PersonaDTO savePersonaDTO(PersonaDTO personaDTO) {
-        // Crear un nuevo persona a partir del DTO
         Persona persona = personaMapper.toEntity(personaDTO);
 
 
-        // Guarda el persona en la base de datos
+// Guarda el persona en la base de datos
         Persona savedPersona = personaRepository.save(persona);
-        // Retorna el DTO del persona guardado
         return personaMapper.toDTOPersona(savedPersona);
     }
 
-    // Eliminar un persona en la base de datos y en la API externa
+// Eliminar un persona en la base de datos y en la API
     public void deletePersona(Long id) {
         if (personaRepository.existsById(id)) {
             personaRepository.deleteById(id);
@@ -98,7 +96,7 @@ public class PersonaServiceRest {
             throw new RuntimeException("Persona no encontrado con ID: " + id);
         }
     }
-
+// Actualizar un persona
     public PersonaDTO updatePersonaDTO(Long id, PersonaDTO personaDTO) {
         return personaRepository.findById(id)
             .map(persona -> {
@@ -107,7 +105,7 @@ public class PersonaServiceRest {
             })
             .orElse(null);
     }
-
+// Crear un nuevo persona a partir de un DTO
     public PersonaDTO savePersonaFromApi(PersonaDTO personaDTO) {
         throw new UnsupportedOperationException("Unimplemented method 'savePersonaFromApi'");
     }

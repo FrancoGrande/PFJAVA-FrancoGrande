@@ -26,7 +26,7 @@ public class ProductoService {
         this.productoRepository = productoRepository;
         this.productoMapper = productoMapper;
     }
-
+// mostrar todos los productos
     public List<ProductoDTO> getAllProductos() {
         if (productoRepository.findAll().isEmpty()) {
             throw new RuntimeException("No se encontraron productos");
@@ -37,14 +37,14 @@ public class ProductoService {
                 .map(productoMapper::toDTOProducto)
                 .collect(Collectors.toList());
     }
-
+// Obtener un producto por ID
     public Optional<ProductoDTO> getProductoById(Long id) {
         if (productoRepository.findById(id).isEmpty()) {
             throw new RuntimeException("No se encontraron productos");
         }
         return productoRepository.findById(id).map(productoMapper::toDTOProducto);
     }
-
+// Crear un nuevo producto
     public ProductoDTO saveProducto(ProductoDTO productoDTO) {
         Producto producto = productoMapper.toEntity(productoDTO);
 
@@ -52,7 +52,7 @@ public class ProductoService {
         Producto savedProducto = productoRepository.save(producto);
         return productoMapper.toDTOProducto(savedProducto);
     }
-
+// Eliminar un producto
     public void deleteProducto(Long id) {
         if (productoRepository.existsById(id)) {
             productoRepository.deleteById(id);
@@ -60,7 +60,7 @@ public class ProductoService {
             throw new RuntimeException("El producto no existe");
         }
     }
-
+// Actualizar el stock de un producto
     public ProductoDTO updateStockProducto(Long productoId, int nuevoStock) {
         return productoRepository.findById(productoId)
             .map(producto -> {

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional; // Importación correcta
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -19,6 +19,9 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
+
+
+// mostrar todos los productos
     @GetMapping("/all")
     public ResponseEntity<ApiResponseMsg> getAllProductos() {
         try {
@@ -28,7 +31,7 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(new ApiResponseMsg("No hay productos", e.getMessage()));
         }
     }
-
+// Obtener un producto por ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponseMsg> getProductoById(@PathVariable Long id) {
         try {
@@ -41,7 +44,7 @@ public class ProductoController {
                                 .body(new ApiResponseMsg("Error: " + e.getMessage(), null));
         }
     }
-
+// Crear un nuevo producto
     @PostMapping("/create")
     public ResponseEntity<ApiResponseMsg> createProducto(@RequestBody ProductoDTO productoDTO) {
         try {
@@ -51,7 +54,7 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(new ApiResponseMsg("Error al crear producto", e.getMessage()));
         }
     }
-
+// Eliminar un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseMsg> deleteProducto(@PathVariable Long id) {
         try {
@@ -61,7 +64,7 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(new ApiResponseMsg("Error: No se pudo eliminar el producto", e.getMessage()));
         }
     }
-
+// Actualizar el stock de un producto
     @PatchMapping("/{id}/stock")
     public ResponseEntity<ApiResponseMsg> updateStock(@PathVariable Long id, @RequestParam int nuevoStock) {
         try {

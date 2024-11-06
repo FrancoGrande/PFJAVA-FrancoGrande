@@ -9,7 +9,7 @@ import lombok.Data;
 public class PersonaDTO {
     @Schema(description = "Identificador de Persona", example = "1")
     private Long id;
-    
+
     @Schema(description = "Nombre del Persona", example = "Asdasd Asdasd")
     private String name;
     
