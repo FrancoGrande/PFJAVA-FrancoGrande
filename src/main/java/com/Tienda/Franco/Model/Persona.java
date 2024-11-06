@@ -1,8 +1,5 @@
 package com.Tienda.Franco.Model;
 
-import java.util.Collection;
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

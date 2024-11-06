@@ -2,7 +2,6 @@ package com.Tienda.Franco.Controller;
 
 import com.Tienda.Franco.DTO.ApiResponseMsg;
 import com.Tienda.Franco.DTO.ProductoDTO;
-import com.Tienda.Franco.Model.Producto;
 import com.Tienda.Franco.Service.ProductoService;
 
 import org.springframework.beans.factory.annotation.Autowired;

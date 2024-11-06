@@ -14,8 +14,8 @@ public class OpenApiConfig {
         @Bean
         public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Api Resident Evil")
-                        .description("Modelo MVC para Api de Resident Evil .")
+                .info(new Info().title("Api CompraMas")
+                        .description("Modelo MVC para Api de CompraMas .")
                         .version("v2.0.1")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
