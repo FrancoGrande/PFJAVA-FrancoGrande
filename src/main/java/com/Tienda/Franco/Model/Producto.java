@@ -14,31 +14,74 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String tipo;
+    private String tipo; 
 
-    private int stock; // Agregar atributo stock
+    private Double precio; 
+    private int stock; 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Persona persona;
- 
+    private Persona persona;  // Relación con Persona
 
+    // Constructor vacío
     public Producto() {
     }
 
-    public Producto(Long id, String nombre, String tipo, int stock, Persona persona) {	
+
+    public Producto(Long id, String nombre, String tipo, Double precio, int stock, Persona persona) {
         this.id = id;
         this.nombre = nombre;
+        this.tipo = tipo; 
+        this.precio = precio; 
+        this.stock = stock;
+        this.persona = persona;
+    }
+
+    // Getters y setters para cada campo 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTipo() {
+        return tipo; 
+    }
+
+    public void setTipo(String tipo) {
         this.tipo = tipo;
-        this.stock = stock; // Manejo de stock
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio; 
     }
 
     public int getStock() {
-        return stock; // Método getter para stock
+        return stock;
     }
 
     public void setStock(int stock) {
-        this.stock = stock; // Método setter para stock
+        this.stock = stock;
     }
 
+    public Persona getPersona() {
+        return persona;
+    }
 
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 }
