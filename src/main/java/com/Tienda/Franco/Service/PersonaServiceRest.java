@@ -107,6 +107,11 @@ public class PersonaServiceRest {
     }
 // Crear un nuevo persona a partir de un DTO
     public PersonaDTO savePersonaFromApi(PersonaDTO personaDTO) {
-        throw new UnsupportedOperationException("Unimplemented method 'savePersonaFromApi'");
+        Persona persona = personaMapper.toEntity(personaDTO);
+
+        Persona savedPersona = personaRepository.save(persona);
+
+        return personaMapper.toDTOPersona(savedPersona);
+        
     }
 }

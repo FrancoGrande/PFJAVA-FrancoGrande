@@ -58,7 +58,7 @@ public class PersonaController {
     }
 
     // Eliminar persona por ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePersona(@PathVariable Long id) {
         try {
             personaService.deletePersona(id);
